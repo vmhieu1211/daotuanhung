@@ -104,7 +104,7 @@
 					</table>
 					</div>
 					<div class="total-cost">
-						<h6>Total <span>{{ $newTotal }}</span></h6>
+						<h6>Total <span>${{ $newTotal }}</span></h6>
 					</div>
 				</div>
 			</div>

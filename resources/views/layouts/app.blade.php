@@ -118,13 +118,13 @@
                             <li class="list-group-item bg-primary border-white">
                                 <a href="{{ route('contactMessages') }}" class="text-decoration-none text-light">Messages</a>
                             </li>
-{{-- 
-                            <li class="list-group-item bg-primary border-white">
-                                <a href="{{ route('social-links.index') }}" class="text-decoration-none text-light">Social Links</a>
-                            </li> --}}
 
                             <li class="list-group-item bg-primary border-white">
-                                <a href="{{ route('users.index') }}" class="text-decoration-none text-light">Platform Users</a>
+                                <a href="{{ route('roles.index') }}" class="text-decoration-none text-light">Roles</a>
+                            </li>
+
+                            <li class="list-group-item bg-primary border-white">
+                                <a href="{{ route('users.index') }}" class="text-decoration-none text-light"> Users</a>
                             </li>
 
                             <li class="list-group-item bg-primary border-white">

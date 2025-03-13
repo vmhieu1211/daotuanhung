@@ -1,13 +1,15 @@
 <?php
 
- 
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\CouponController;
@@ -50,8 +52,9 @@ Route::middleware('auth',)->group(function () {
 
 // Login & Register Routes
 Auth::routes();
-// Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
-// Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Adminstrator Routes
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -68,4 +71,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
 	Route::get('/admin/contact', [MessageController::class, 'index'])->name('contactMessages');
 	Route::get('/admin/contact/{id}', [MessageController::class, 'show'])->name('contact.show');
 	Route::resource('admin/orders', OrderController::class);
+	Route::resource('admin/roles', RoleController::class);
 });

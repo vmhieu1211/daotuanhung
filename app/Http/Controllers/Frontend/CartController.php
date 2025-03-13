@@ -12,7 +12,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        Cart::destroy();
+        // Cart::destroy();
         $systemInfo = SystemSetting::first();
 
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
