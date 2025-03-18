@@ -97,9 +97,6 @@
                                 <input type="hidden" name="quantity" value="1">
                                 <button type="submit" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></button>
                             </form>
-                            <form>
-                                <button type="submit" class="wishlist-btn"><i class="flaticon-heart"></i></button>
-                            </form>
 						</div>
 					</div>
 					<div class="pi-text">
