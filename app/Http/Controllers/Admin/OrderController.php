@@ -39,5 +39,5 @@ class OrderController extends Controller
             'order_status_id' => $request->order_status_id,
         ]);
         return redirect()->back()->with('success', 'Order status updated successfully');
-    }
+    }   
 }

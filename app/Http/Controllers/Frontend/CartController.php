@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SystemSetting;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
- 
+
 class CartController extends Controller
 {
     public function index()
@@ -16,11 +16,9 @@ class CartController extends Controller
         $systemInfo = SystemSetting::first();
 
         $mightAlsoLike = Product::inRandomOrder()->with('photos')->take(4)->get();
-
-        $discount = session()->get('coupon')['discount'] ?? 0;
-        $newSubtotal = (Cart::subtotal() - $discount);
-        $newTotal = $newSubtotal;
-
+        $discount = number_format((session()->get('coupon')['discount'] ?? 0), 3);
+        $newSubtotal = number_format((Cart::subtotal() - $discount), 3);
+        $newTotal = number_format($newSubtotal, 3);
         return view('cart', compact('mightAlsoLike', 'systemInfo'))->with([
             'discount' => $discount,
             'newSubtotal' => $newSubtotal,
@@ -30,21 +28,26 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
+        $product = Product::find($request->id);
+
+        if ($product->quantity < $request->quantity) {
+            return redirect()->back()->with('error', "Không đủ số lượng sản phẩm trong kho.");
+        }
+
         $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
-            return $cartItem->id  === $request->id;
+            return $cartItem->id === $request->id;
         });
 
         if ($duplicates->isNotEmpty()) {
-            session()->flash('success', "$request->name already in your cart!");
-
-            return redirect(route('cart.index'));
+            return redirect()->route('cart.index')->with('success', "$request->name đã có trong giỏ hàng!");
         }
 
-        Cart::add($request->id, $request->name, $request->quantity, $request->price, ['size' => $request->Size, 'color' => $request->Color])->associate('App\Models\Product');
+        Cart::add($request->id, $request->name, $request->quantity, $request->price)
+            ->associate('App\Models\Product');
 
-        session()->flash('success', "$request->name added to your cart successfully!");
+        $product->decrement('quantity', $request->quantity);
 
-        return redirect(route('cart.index'));
+        return redirect()->route('cart.index')->with('success', "$request->name đã được thêm vào giỏ hàng!");
     }
 
     public function update(Request $request, $id)
@@ -56,6 +59,9 @@ class CartController extends Controller
     public function destroy($id)
     {
         Cart::remove($id);
+        if (Cart::count() == 0 || (session()->has('coupon') && Cart::subtotal() < session('coupon')['minimum_amount'])) {
+            session()->forget('coupon');
+        }
         return redirect()->back()->with('success', "Item removed successfully!");
     }
 }

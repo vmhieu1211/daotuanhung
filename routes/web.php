@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -18,6 +17,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\CouponsController;
+use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Admin\SystemSettingsController;
@@ -72,4 +72,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
 	Route::get('/admin/contact/{id}', [MessageController::class, 'show'])->name('contact.show');
 	Route::resource('admin/orders', OrderController::class);
 	Route::resource('admin/roles', RoleController::class);
+	Route::resource('admin/order-statuses', OrderStatusController::class);
 });
