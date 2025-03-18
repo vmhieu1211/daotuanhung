@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -35,7 +34,6 @@ Route::get('/terms-and-conditions', [FrontendController::class, 'terms'])->name(
 Route::get('/privacy-policy', [FrontendController::class, 'privacy'])->name('privacy.policy');
 
 Route::resource('cart', CartController::class);
-Route::resource('wishlist', WishlistController::class);
 
 Route::post('coupons', [CouponsController::class, 'store'])->name('coupons.store');
 Route::delete('coupons', [CouponsController::class, 'destroy'])->name('coupons.destroy');

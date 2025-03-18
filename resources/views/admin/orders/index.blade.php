@@ -6,28 +6,29 @@
 
         <ol class="breadcrumb">
             <a href="{{ route('home') }}" class="text-decoration-none mr-3">
-                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Trang chủ</li>
             </a>
-            <li class="breadcrumb-item active">Orders</li>
+            <li class="breadcrumb-item active">Đơn hàng</li>
         </ol>
 
     </nav>
 
     <div class="card">
-        <div class="card-header">Orders</div>
+        <div class="card-header">Đơn hàng</div>
 
         <div class="card-body">
 
             <table class="table table-bordered table-hover table-dark table-responsive">
                 <thead>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>Amount</th>
-                    <th>Pay Method</th>
-                    <th>Status</th>
-                    <th>Check</th>
+                    <th>Tên</th>
+                    <th>Điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Thành phố</th>
+                    <th>Tổng tiền</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày tháng</th>
+                    <th>Kiểm tra</th>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
@@ -36,13 +37,13 @@
                             <td>{{ $order->billing_phone }}</td>
                             <td>{{ $order->billing_address }}</td>
                             <td>{{ $order->billing_city }}</td>
-                            <td>${{ $order->billing_total }}</td>
+                            <td> {{ $order->billing_total }}đ</td>
                             <td>{{ $order->payment_method }}</td>
                             <td>{{ $order->status->name }}</td>
                             <td>{{ $order->formatted_created_at }}</td>
                             <td>
-                                <a href="{{ route('orders.show', $order->id) }}" class="btn btn-success btn-sm">View
-                                    Order</a>
+                                <a href="{{ route('orders.show', $order->id) }}" class="btn btn-success btn-sm">Xem Đơn
+                                    Hàng</a>
                             </td>
                         </tr>
                     @endforeach
