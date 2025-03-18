@@ -49,11 +49,18 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|min:6',
             'roles' => 'required|array',
             'roles.*' => 'exists:roles,id',
         ]);
 
-        $user->update($request->only('name', 'email'));
+        $data = $request->only('name', 'email');
+        
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+        $user->update($data);
+
         $user->roles()->sync($request->roles);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');

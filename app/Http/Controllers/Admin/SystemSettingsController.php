@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\SystemSetting;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class SystemSettingsController extends Controller
@@ -31,14 +30,14 @@ class SystemSettingsController extends Controller
 
     public function update(Request $request, $slug)
     {
-         $request->validate([
+        $request->validate([
             'name' => 'required',
             'tel' => 'required',
             'address' => 'required',
             'email' => 'required',
             'logo' => 'image',
         ]);
-         $setting = SystemSetting::where('slug', $slug)->firstOrFail();
+        $setting = SystemSetting::where('slug', $slug)->firstOrFail();
 
         $data = $request->only([
             'name',

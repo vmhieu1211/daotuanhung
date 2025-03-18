@@ -8,16 +8,33 @@
                 <form action="{{ route('users.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PUT')
+
                     <div class="form-group">
                         <label for="name">Tên</label>
-                        <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}"
-                            required>
+                        <input type="text" name="name" id="name" class="form-control"
+                            value="{{ old('name', $user->name) }}" required>
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}"
-                            required>
+                        <input type="email" name="email" id="email" class="form-control"
+                            value="{{ old('email', $user->email) }}" required>
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label for="password">Mật khẩu (để trống nếu không đổi)</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                        @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    
                     <div class="form-group">
                         <label for="roles">Roles</label>
                         <select name="roles[]" id="roles" class="form-control" multiple>
